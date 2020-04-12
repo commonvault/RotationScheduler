@@ -38,7 +38,7 @@ input_params <- list(T=180,
                      
 The parameters in the above list are defined as follows:
 
-**T** is the number of days the simulation runs for.
+**T** is the number of days simulated.
 
 **prob_medic_has_it_already** and **prob_patient_has_it_already** are the probabilities that a medic and a patient respictively have the virus on day 0 of the simulation. 
 
@@ -61,6 +61,18 @@ The parameters in the above list are defined as follows:
 **npatients_init** is the number of patients that the team is responsible for at the start of the simulation. Note that in our simulation the average number of patients present per day is equal to npatients_init.
 
 **average_patient_stay** is the average number of days each patient stays in the hospital. Note that in our simulation, the duration each patient stay follows a geometric distribution with parameter 1/average_patient_stay.
+
+**lognormal_param1** and **lognormal_param2** are the parameters that define a lognormal distribution. Whenever someone is infected in the simulation, their incubation period (the time from infection to symptoms) is drawn independently from this lognormal distribution. When lognormal_param1 is set to 1.63, the median latent period is 5.1 days (as is reported to be the case for COVID-19)
+
+**days_past_symptom_patient_infective** is the number of days a patient is symptomatic before they are isolated and moved to a different ward.
+
+**medic_medic_transmission_probability_factor** is a metric for how likely the SARS-COV-2 virus is to spread between medical staff. This metric should be set to a high number between 0 and 1 if the medical team members interact a lot with one another  and should be set to a low number between 0 and 1 if the medical team members maintain a lot of social distance from eachother while at the hospital ward.
+
+**maximum_hours_per_week_nurse** is the maximum number of hours in a seven day period that a nurse is allowed to work. A nurse will not be assigned to work more than this many hours in a given 7 day period under any circumstances. Note that the average number of hours a nurse works per week is typically far below this threshold.
+
+**n_attendings**, **n_residents**, and **n_nurses** are the number of attending physicians, residents and nurses on the team respectively.
+
+**n_attentings_at_once**,**n_residents_at_once** and **n_nurses_at_once** are the number of team members that must be on duty at any given time in order to staff a fully functioning team.
 
 ## Running the function for varying choices of scheduling design parameters
 
