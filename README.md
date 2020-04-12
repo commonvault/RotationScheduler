@@ -76,4 +76,41 @@ The parameters in the above list are defined as follows:
 
 ## Running the function for varying choices of scheduling design parameters
 
-## Function Outputs
+Once the list of input parameters is set, the simulator can be run for varying choices of scheduling design.
+
+To run the simulator, one can run the following command
+
+sim_output <- COVID_sim9(length_rotation=6,length_rotation_n=3,nspd=2,staggering=FALSE,input_params=input_params,nit=10000)
+
+Note that the arguments of the above function should be adjusted based on the scheduling design we are interested in exploring:
+
+**length_rotation** is the length of physician rotations in days.
+
+**length_rotation_n** is the length of nurse rotations in days (i.e the number of consecutive days in which each nurse is scheduled to work.) This input argument should be chosen keeping in mind that the nurses have a cap on how many hours they can work in a seven day span.
+
+**nspd** is the number of nursing shifts per day. In our simulator this should ALWAYS be set to either 2 or 3. When it is set to 2, each nurse works 12 hour shifts. When it is set to 3, each nurse works 8 hour shifts.
+
+**staggering** is an input argument that should be set to TRUE if we want our rotations to be staggered between various team members and should be set to FALSE if we want our rotations to be un-staggered (there are set days in which all the doctors rotate and set days in which all the nurses rotate (and if possible these are the same days))
+
+**input_params** is the list of input parameters described in the previous section.
+
+**nit** is the number of Monte Carlo simulations/expirements to run. If nit is too large, the runtime will be too long. If nit is too small then our error bars for the estimated probability of team failure will be too large.
+
+If we would like to compare the schedules in which nurses work 8 hour shifts with schedules in which nurses work 12 hours shifts we can run the following to lines of code and compare the outputs.
+
+sim_output8 <- COVID_sim9(length_rotation=3,length_rotation_n=3,nspd=3,staggering=FALSE,input_params=input_params,nit=10000)
+
+sim_output12 <- COVID_sim9(length_rotation=3,length_rotation_n=3,nspd=2,staggering=FALSE,input_params=input_params,nit=10000)
+
+
+## COVID_sim9 Function Outputs
+
+COVID_sim9 returns a list with the following named components: failures,ac,rc,nc,af,rf,nf
+
+**failures** is a logical vector with length equal to the number of Monte Carlo iterations which indicates which simulations had team failures and which simulations did not. The proportion of this vector that is true will give a point estimate for the probability of team failure under the inputted parameter choices and scheduling design.
+
+**ac**, **rc** and **nc** are vectors with length equal to the number of Monte Carlo iterations that track the number of attendings, residents and nurses respectively who were infected during the course of each simulation.
+
+**af**, **rf** and **nf** are logical vectors with length equal to the number of Monte Carlo iterations that track whether a shortage of attendings, residents or nurses respectively was responsible for team failure. All of these three logical vecotors have FALSE entries in rows corresponding to simulations in which the team didn't fail.
+
+
