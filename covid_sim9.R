@@ -504,7 +504,6 @@ COVID_sim9 <- function(length_rotation,length_rotation_n,nspd,staggering=FALSE,i
   }
   #}
   
-  print(medic_medic_transmissions/(medic_medic_transmissions+medic_patient_transmissions))
   return(list(failures=failures,ac=n_attendings_that_got_covid,rc=n_residents_that_got_covid,nc=n_nurses_that_got_covid,
               nf=failure_due_to_nurse_shortage, rf =failure_due_to_resident_shortage, af = failure_due_to_attending_shortage ))
 }
